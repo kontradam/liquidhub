@@ -1,0 +1,17 @@
+[Unit]
+Description=LiquidhubIndicatorSystem — derivatives collector (OI, funding, L/S ratio)
+After=network.target docker.service
+Wants=docker.service
+
+[Service]
+Type=simple
+User=adas
+WorkingDirectory=/home/adas/MotherlodeApp/LiquidhubIndicatorSystem/src
+ExecStart=/home/adas/MotherlodeApp/LiquidhubIndicatorSystem/src/.venv/bin/python -m liquidhub.data.derivatives_collector
+Restart=always
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

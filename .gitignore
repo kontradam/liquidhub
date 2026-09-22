@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+.env
+.env.local
+*.log
+logs/
+.coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+.DS_Store
+# kopie .env z kluczami API — nigdy do repo
+.env.*
+!.env.example
+*.bak*

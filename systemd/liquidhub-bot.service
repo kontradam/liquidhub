@@ -1,0 +1,18 @@
+[Unit]
+Description=LiquidhubIndicatorSystem — paper trading orchestrator
+After=network.target docker.service
+Wants=docker.service
+
+[Service]
+Type=simple
+User=adas
+WorkingDirectory=/home/adas/MotherlodeApp/LiquidhubIndicatorSystem/src
+Environment="PATH=/home/adas/.local/bin:/usr/local/bin:/usr/bin:/bin"
+ExecStart=/home/adas/.local/bin/uv run liquidhub run
+Restart=always
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: liquidhub-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: liquidhub
+      POSTGRES_PASSWORD: liquidhub
+      POSTGRES_DB: liquidhub
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      # Existing PG data dir on Dysk_S. If version mismatch, point at a new dir
+      # and restore from backup/BACKUP_KRYPTO_20260206/liquidhub.sql
+      - /home/adas/Dysk_S/postgres/data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U liquidhub"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: liquidhub-redis
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+
+  app:
+    build: .
+    container_name: liquidhub-app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://liquidhub:liquidhub@postgres:5432/liquidhub
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ../models:/models:ro
+      - ./logs:/app/logs
+    ports:
+      - "8000:8000"
