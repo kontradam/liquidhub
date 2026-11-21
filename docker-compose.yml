@@ -12,7 +12,7 @@ services:
     volumes:
       # Existing PG data dir on Dysk_S. If version mismatch, point at a new dir
       # and restore from backup/BACKUP_KRYPTO_20260206/liquidhub.sql
-      - /home/adas/Dysk_S/postgres/data:/var/lib/postgresql/data
+      - ${PG_DATA_DIR:-./pgdata}:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U liquidhub"]
       interval: 10s

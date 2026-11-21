@@ -6,7 +6,7 @@ Writes to:
   - funding_rate_snapshots  (pair_id, timestamp, funding_rate, next_funding_at, mark_price)
   - long_short_ratio_snapshots (pair_id, timestamp, ls_ratio, long_pct, short_pct, source)
 
-Replaces the old /home/adas/trading-system/.../derivatives_collector.py which was
+Replaces the old trading-system derivatives_collector.py which was
 orphaned when that tree was deleted. Symbols are read from market_pairs
 (exchange=settings.exchange, active=true).
 """

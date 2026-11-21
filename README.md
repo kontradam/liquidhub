@@ -3,6 +3,22 @@
 Fresh-build trading signal engine for the LiquidhubIndicatorSystem project.
 Designed to run on HP t740 (Linux, Python 3.11).
 
+## About this project
+
+A crypto trading signal engine (fintech side project). Fourteen-plus "workers"
+(XGBoost models on 5m/15m/1h/4h candles, market-regime detection, candlestick
+patterns, sentiment, derivatives data such as open interest and funding) vote on
+LONG / SHORT / HOLD; a weighted-consensus engine turns the votes into a signal,
+and a paper-trading loop feeds realised P&L back into the worker weights.
+
+History: earlier prototypes (LiquidHub, LiquidFuture) were built between
+October 2025 and April 2026. This repository is the clean rewrite started in
+September 2026; the first commit is the state at the moment of publication.
+
+**Paper trading only.** The system never traded real money and is not
+financial advice. Exchange keys go in `.env` (see `.env.example`), which is
+never committed.
+
 ## Bootstrap
 
 ```bash
@@ -24,12 +40,12 @@ docker compose up -d postgres redis
 uv run liquidhub db-init      # creates tables (dev); use alembic in prod
 ```
 
-If the existing PG data dir on `/home/adas/Dysk_S/postgres/data` is an
+If the existing PG data dir (`PG_DATA_DIR`, default `./pgdata`) is an
 incompatible version, bootstrap fresh and restore from the SQL dump:
 
 ```bash
 # check version
-sudo cat /home/adas/Dysk_S/postgres/data/PG_VERSION
+sudo cat "$PG_DATA_DIR/PG_VERSION"
 
 # restore from backup dump
 docker compose exec -T postgres psql -U liquidhub -d liquidhub \

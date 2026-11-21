@@ -16,7 +16,7 @@ DERIV_MAX="${DERIV_MAX:-300}"
 PAIR_OHLCV_MAX="${PAIR_OHLCV_MAX:-1200}"
 
 STATE_FILE="${STATE_FILE:-/tmp/liquidhub-freshness.state}"
-TELEGRAM_TOKEN_FILE="${TELEGRAM_TOKEN_FILE:-/home/adas/MotherlodeApp/iMessage/BotToken}"
+TELEGRAM_TOKEN_FILE="${TELEGRAM_TOKEN_FILE:-$HOME/MotherlodeApp/iMessage/BotToken}"
 IMESSAGE_UNIT="${IMESSAGE_UNIT:-/etc/systemd/system/imessage.service}"
 
 PSQL="psql -tAq -F| -v ON_ERROR_STOP=1 $DB_URL"

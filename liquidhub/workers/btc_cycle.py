@@ -8,7 +8,11 @@ from liquidhub.workers.base import MarketContext, Signal, Worker
 
 log = get_logger("worker.btc_cycle")
 
-MODELS_DIR = "/home/adas/MotherlodeApp/LiquidhubIndicatorSystem/models/btc_cycle"
+import os
+from pathlib import Path
+
+# Default: <project>/models/btc_cycle (one level above src/); override with MODELS_DIR.
+MODELS_DIR = os.environ.get("MODELS_DIR", str(Path(__file__).resolve().parents[3] / "models")) + "/btc_cycle"
 
 
 class BTCCycleWorker(Worker):
